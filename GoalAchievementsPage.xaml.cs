@@ -17,7 +17,29 @@ namespace MobileAppMAUI
             if (_goal.Achievements == null)
                 _goal.Achievements = new ObservableCollection<Achievement>();
 
+            // Set the correct image based on the goal type
+            SetTypeImage();
+
             UpdateProgress();
+        }
+
+        private void SetTypeImage()
+        {
+            switch (_goal.Type)
+            {
+                case GoalType.Finance:
+                    TypeImage.Source = "fingoal.png";
+                    break;
+                case GoalType.Learning:
+                    TypeImage.Source = "edugoal.png";
+                    break;
+                case GoalType.Personal:
+                    TypeImage.Source = "personalgoal.png";
+                    break;
+                case GoalType.Sport:
+                    TypeImage.Source = "healthgoal.png";
+                    break;
+            }
         }
 
         private void UpdateProgress()
@@ -31,7 +53,18 @@ namespace MobileAppMAUI
             // Update the progress bar (value between 0 and 1)
             if (_goal.Quantity > 0)
             {
-                GoalProgressBar.Progress = Math.Clamp(currentTotal / _goal.Quantity, 0, 1);
+                double progress = Math.Clamp(currentTotal / _goal.Quantity, 0, 1);
+                GoalProgressBar.Progress = progress;
+
+                // Check if goal is achieved
+                if (progress >= 1.0)
+                {
+                    RewardBox.IsVisible = true;
+                }
+                else
+                {
+                    RewardBox.IsVisible = false;
+                }
             }
         }
 
@@ -47,7 +80,7 @@ namespace MobileAppMAUI
                 {
                     Goal = _goal,
                     Date = DateTime.Now,
-                    Points = points // Explicitly cast double to int
+                    Points = points
                 };
 
                 // Add to the list

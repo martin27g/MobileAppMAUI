@@ -7,10 +7,37 @@
     <Grid RowDefinitions="Auto, *, Auto" Padding="15" RowSpacing="10">
 
         <VerticalStackLayout Grid.Row="0" Spacing="5">
+
+            <Image x:Name="TypeImage" 
+                   HeightRequest="100" 
+                   WidthRequest="100" 
+                   HorizontalOptions="Center" 
+                   Margin="0,0,0,5"/>
+
             <Label Text="{Binding Description}" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
             <Label Text="Общ прогрес:" TextColor="Gray" HorizontalOptions="Center"/>
-            <ProgressBar x:Name="GoalProgressBar" ProgressColor="#77B948" ScaleY="3"/>
+            <ProgressBar x:Name="GoalProgressBar" ProgressColor="#77B948" ScaleY="2"/>
             <Label x:Name="ProgressLabel" HorizontalOptions="Center" TextColor="#77B948" FontAttributes="Bold"/>
+
+            <Frame x:Name="RewardBox" 
+                   IsVisible="False" 
+                   BackgroundColor="#FFD700" 
+                   BorderColor="Orange"
+                   Padding="10" 
+                   Margin="0,15,0,0" 
+                   CornerRadius="10" 
+                   HorizontalOptions="Center">
+                <VerticalStackLayout>
+                    <Label Text="🎉 Честито! Печелиш 10 точки! 🎉"
+                       TextColor="Black" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center"/>
+                <Label Text="Но трябва да се върнеш на предишната страница, за да си ги запазиш :)"
+                       TextColor="Grey"
+                       FontSize="8"
+                       HorizontalTextAlignment="End"/>
+                </VerticalStackLayout>
+            </Frame>
         </VerticalStackLayout>
 
         <CollectionView Grid.Row="1" x:Name="AchievementsList" ItemsSource="{Binding Achievements}">
