@@ -43,27 +43,26 @@ public partial class GoalDetails : ContentPage
         EditButtons.IsVisible = _editing;
         NewButtons.IsVisible = !_editing;
 
-        // Checkmark is visible if editing AND goal is not yet achieved
-        CheckmarkBtn.IsVisible = _editing && !_goal.IsAchieved;
+        // UPDATED: Always show checkmark if we are in edit mode
+        // It no longer hides after you click it.
+        CheckmarkBtn.IsVisible = _editing;
     }
 
     private async void OnCompleteGoalClicked(object sender, EventArgs e)
     {
-        if (_goal.IsAchieved) return;
-
-        // 1. Mark as Achieved so the button disappears
+        // 1. Mark as Achieved (so it counts in the "Total Goals" stats)
         _goal.IsAchieved = true;
-        CheckmarkBtn.IsVisible = false;
 
-        // 2. Add 10 Points (Marked as IsReward = true)
-        // This ensures these points go to the Filter Page but NOT the Progress Bar
+        // Note: We REMOVED the line that hides the button.
+
+        // 2. Add the 10 Points Reward (Repeatedly)
         var achievement = new Achievement
         {
             Goal = _goal,
             GoalId = _goal.Id,
             Date = DateTime.Now,
             Points = 10,
-            IsReward = true // <--- IMPORTANT: separates this from visual progress
+            IsReward = true // Counts towards Score, but ignored by Progress Bar
         };
 
         if (_goal.Achievements == null)
@@ -71,10 +70,8 @@ public partial class GoalDetails : ContentPage
 
         _goal.Achievements.Add(achievement);
 
-        await DisplayAlert("Браво!", "Успешно добавихте 10 точки към тази цел!", "ОК");
+        await DisplayAlert("Браво!", "Добавихте 10 точки!", "ОК");
     }
-
-    // ... (Keep the rest of your methods exactly the same) ...
 
     private async void OnAchievementsClicked(object sender, EventArgs e)
     {
