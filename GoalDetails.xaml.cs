@@ -1,8 +1,6 @@
 ﻿using MobileAppMAUI.Models;
 using MobileAppMAUI.Services;
 using System.Net.Http.Json;
-using System.Runtime.CompilerServices;
-using System.Text.Json.Nodes;
 
 namespace MobileAppMAUI;
 
@@ -11,11 +9,9 @@ public partial class GoalDetails : ContentPage
     private DataService _dataService;
     private Goal _goal;
     private bool _editing;
-
     private HttpClient _httpClient = new HttpClient();
     private Weather weatherApi;
 
-    // ... (Constructors remain the same) ...
     public GoalDetails(DataService dataService, Guid GoalId)
     {
         InitializeComponent();
@@ -36,7 +32,6 @@ public partial class GoalDetails : ContentPage
     protected override void OnAppearing()
     {
         LoadApi();
-
         switch (_goal.Type)
         {
             case GoalType.Finance: TypeImage.Source = "fingoal.png"; break;
@@ -48,23 +43,27 @@ public partial class GoalDetails : ContentPage
         EditButtons.IsVisible = _editing;
         NewButtons.IsVisible = !_editing;
 
-        // 1. Control Checkmark Visibility
-        // Visible only if we are editing an existing goal
-        CheckmarkBtn.IsVisible = _editing;
+        // Checkmark is visible if editing AND goal is not yet achieved
+        CheckmarkBtn.IsVisible = _editing && !_goal.IsAchieved;
     }
 
-    // 2. Handle the Checkmark Click
     private async void OnCompleteGoalClicked(object sender, EventArgs e)
     {
-        // "Send 10 points" -> We add an achievement worth 10 points to this goal.
-        // The AchievementFilter page will sum these up later.
+        if (_goal.IsAchieved) return;
 
+        // 1. Mark as Achieved so the button disappears
+        _goal.IsAchieved = true;
+        CheckmarkBtn.IsVisible = false;
+
+        // 2. Add 10 Points (Marked as IsReward = true)
+        // This ensures these points go to the Filter Page but NOT the Progress Bar
         var achievement = new Achievement
         {
             Goal = _goal,
-            GoalId = _goal.Id, // Ensure ID linkage if needed
+            GoalId = _goal.Id,
             Date = DateTime.Now,
-            Points = 10 // Fixed 10 points reward
+            Points = 10,
+            IsReward = true // <--- IMPORTANT: separates this from visual progress
         };
 
         if (_goal.Achievements == null)
@@ -75,7 +74,8 @@ public partial class GoalDetails : ContentPage
         await DisplayAlert("Браво!", "Успешно добавихте 10 точки към тази цел!", "ОК");
     }
 
-    // ... (Rest of existing methods: OnAchievementsClicked, OnSaveClicked, etc.) ...
+    // ... (Keep the rest of your methods exactly the same) ...
+
     private async void OnAchievementsClicked(object sender, EventArgs e)
     {
         if (_goal == null || _goal.Id == Guid.Empty)
@@ -159,6 +159,6 @@ public partial class GoalDetails : ContentPage
             weatherApi = await _httpClient.GetFromJsonAsync<Weather>("https://api.open-meteo.com/v1/forecast?latitude=42.6667&longitude=25.25&current=wind_speed_10m,temperature_2m,rain,cloud_cover&timezone=auto");
             API.Text = $"Температура: {weatherApi.current.temperature_2m.ToString()} °C, вятър: {weatherApi.current.wind_speed_10m.ToString()} Облачност: {weatherApi.current.cloud_cover.ToString()} %";
         }
-        catch { /* Handle API error silently or log */ }
+        catch { }
     }
 }

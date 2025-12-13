@@ -16,31 +16,60 @@ public partial class AchivementFilter : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        CalculatePoints();
+        CalculateStats();
     }
 
-    private void CalculatePoints()
+    private void CalculateStats()
     {
-        // 1. Flatten all achievements from all goals
         var allGoals = _dataService.Goals;
 
-        // 2. Sum points by Type
-        double financePoints = allGoals.Where(g => g.Type == GoalType.Finance)
-                                       .SelectMany(g => g.Achievements).Sum(a => a.Points);
+        // 1. Total Goals Achieved (Count only unique goals that are finished)
+        int totalAchieved = allGoals.Count(g => g.IsAchieved);
+        TotalAchievedLabel.Text = totalAchieved.ToString();
 
-        double sportPoints = allGoals.Where(g => g.Type == GoalType.Sport)
-                                     .SelectMany(g => g.Achievements).Sum(a => a.Points);
+        // 2. Calculate Stats per Category
+        // Points: Sum only "IsReward" points
+        // Count: Count all goals of that type (achieved or not)
 
-        double learningPoints = allGoals.Where(g => g.Type == GoalType.Learning)
-                                        .SelectMany(g => g.Achievements).Sum(a => a.Points);
+        // Finance
+        double finScore = allGoals.Where(g => g.Type == GoalType.Finance)
+                                  .SelectMany(g => g.Achievements)
+                                  .Where(a => a.IsReward)
+                                  .Sum(a => a.Points);
+        int finGoals = allGoals.Count(g => g.Type == GoalType.Finance);
 
-        double personalPoints = allGoals.Where(g => g.Type == GoalType.Personal)
-                                        .SelectMany(g => g.Achievements).Sum(a => a.Points);
+        // Sport
+        double sportScore = allGoals.Where(g => g.Type == GoalType.Sport)
+                                    .SelectMany(g => g.Achievements)
+                                    .Where(a => a.IsReward)
+                                    .Sum(a => a.Points);
+        int sportGoals = allGoals.Count(g => g.Type == GoalType.Sport);
+
+        // Learning
+        double eduScore = allGoals.Where(g => g.Type == GoalType.Learning)
+                                  .SelectMany(g => g.Achievements)
+                                  .Where(a => a.IsReward)
+                                  .Sum(a => a.Points);
+        int eduGoals = allGoals.Count(g => g.Type == GoalType.Learning);
+
+        // Personal
+        double personalScore = allGoals.Where(g => g.Type == GoalType.Personal)
+                                       .SelectMany(g => g.Achievements)
+                                       .Where(a => a.IsReward)
+                                       .Sum(a => a.Points);
+        int personalGoals = allGoals.Count(g => g.Type == GoalType.Personal);
 
         // 3. Update UI
-        FinancePointsLabel.Text = $"{financePoints} Точки";
-        SportPointsLabel.Text = $"{sportPoints} Точки";
-        LearningPointsLabel.Text = $"{learningPoints} Точки";
-        PersonalPointsLabel.Text = $"{personalPoints} Точки";
+        finPoints.Text = $"{finScore} т.";
+        finCount.Text = $"{finGoals} цели";
+
+        helathPoints.Text = $"{sportScore} т.";
+        healthCount.Text = $"{sportGoals} цели";
+
+        eduPoints.Text = $"{eduScore} т.";
+        eduCount.Text = $"{eduGoals} цели";
+
+        personalPoints.Text = $"{personalScore} т.";
+        personalCount.Text = $"{personalGoals} цели";
     }
 }

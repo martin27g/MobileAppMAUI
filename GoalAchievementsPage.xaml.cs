@@ -13,13 +13,10 @@ namespace MobileAppMAUI
             _goal = goal;
             BindingContext = _goal;
 
-            // Ensure the list is initialized if it's null
             if (_goal.Achievements == null)
                 _goal.Achievements = new ObservableCollection<Achievement>();
 
-            // Set the correct image based on the goal type
             SetTypeImage();
-
             UpdateProgress();
         }
 
@@ -27,36 +24,29 @@ namespace MobileAppMAUI
         {
             switch (_goal.Type)
             {
-                case GoalType.Finance:
-                    TypeImage.Source = "fingoal.png";
-                    break;
-                case GoalType.Learning:
-                    TypeImage.Source = "edugoal.png";
-                    break;
-                case GoalType.Personal:
-                    TypeImage.Source = "personalgoal.png";
-                    break;
-                case GoalType.Sport:
-                    TypeImage.Source = "healthgoal.png";
-                    break;
+                case GoalType.Finance: TypeImage.Source = "fingoal.png"; break;
+                case GoalType.Learning: TypeImage.Source = "edugoal.png"; break;
+                case GoalType.Personal: TypeImage.Source = "personalgoal.png"; break;
+                case GoalType.Sport: TypeImage.Source = "healthgoal.png"; break;
             }
         }
 
         private void UpdateProgress()
         {
-            // Calculate total points from all achievements
-            double currentTotal = _goal.Achievements.Sum(a => a.Points);
+            // 1. Calculate Total: IGNORE the 10-point rewards (IsReward == false)
+            // This ensures only the user's manual input counts towards the bar.
+            double currentTotal = _goal.Achievements
+                                       .Where(a => !a.IsReward)
+                                       .Sum(a => a.Points);
 
-            // Update the label (e.g., "50 / 100 km")
             ProgressLabel.Text = $"{currentTotal} / {_goal.Quantity} {_goal.Measure}";
 
-            // Update the progress bar (value between 0 and 1)
             if (_goal.Quantity > 0)
             {
                 double progress = Math.Clamp(currentTotal / _goal.Quantity, 0, 1);
                 GoalProgressBar.Progress = progress;
 
-                // Check if goal is achieved
+                // 2. Restore Old Logic: Box shows only when bar is full mathematically
                 if (progress >= 1.0)
                 {
                     RewardBox.IsVisible = true;
@@ -70,23 +60,19 @@ namespace MobileAppMAUI
 
         private async void OnAddAchievementClicked(object sender, EventArgs e)
         {
-            // Ask user for the amount
             string result = await DisplayPromptAsync("Добави прогрес", $"Колко {_goal.Measure} направихте днес?", keyboard: Keyboard.Numeric);
 
             if (double.TryParse(result, out double points))
             {
-                // Create the new achievement
                 var newAchievement = new Achievement
                 {
                     Goal = _goal,
                     Date = DateTime.Now,
-                    Points = points
+                    Points = points,
+                    IsReward = false // User input is always Visual Progress
                 };
 
-                // Add to the list
                 _goal.Achievements.Add(newAchievement);
-
-                // Refresh the UI calculations
                 UpdateProgress();
             }
         }

@@ -35,6 +35,8 @@ namespace MobileAppMAUI.Models
         private double _quantity;
         private GoalFrequency _frequency = GoalFrequency.None;
         private DateTime? _dueDate;
+        private bool _isAchieved; // New property to track completion status
+
         private ObservableCollection<Achievement> _achievements = new();
         public ObservableCollection<Achievement> Achievements
         {
@@ -84,9 +86,13 @@ namespace MobileAppMAUI.Models
             set => SetProperty(ref _dueDate, value);
         }
 
-    
+        public bool IsAchieved
+        {
+            get => _isAchieved;
+            set => SetProperty(ref _isAchieved, value);
+        }
 
-        // 🔔 INotifyPropertyChanged implementation
+        //  INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected bool SetProperty<T>(ref T backingField, T value, [CallerMemberName] string propertyName = null)
@@ -101,6 +107,5 @@ namespace MobileAppMAUI.Models
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
     }
 }

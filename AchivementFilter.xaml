@@ -3,42 +3,62 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileAppMAUI.AchivementFilter"
              Title="Общ Преглед"
+             BackgroundColor="#F0ECE7"
              Padding="15">
     <ScrollView>
         <VerticalStackLayout Spacing="20">
-            <Label Text="Точки по категория" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center"/>
 
-            <Frame BackgroundColor="#e1f7d5" CornerRadius="10">
-                <VerticalStackLayout Spacing="5">
-                    <Image Source="fingoal.png" HeightRequest="60" WidthRequest="60"/>
-                    <Label Text="Финанси" HorizontalOptions="Center" FontAttributes="Bold"/>
-                    <Label x:Name="FinancePointsLabel" Text="0 Точки" HorizontalOptions="Center" TextColor="#77B948" FontSize="18"/>
+            <Frame BackgroundColor="White" CornerRadius="15" Padding="20">
+                <VerticalStackLayout>
+                    <Label Text="Спечелени Цели" HorizontalOptions="Center" TextColor="Gray"/>
+                    <Label x:Name="TotalAchievedLabel" Text="0" FontSize="40" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#77B948"/>
                 </VerticalStackLayout>
             </Frame>
 
-            <Frame BackgroundColor="#e1f7d5" CornerRadius="10">
-                <VerticalStackLayout Spacing="5">
-                    <Image Source="healthgoal.png" HeightRequest="60" WidthRequest="60"/>
-                    <Label Text="Спорт" HorizontalOptions="Center" FontAttributes="Bold"/>
-                    <Label x:Name="SportPointsLabel" Text="0 Точки" HorizontalOptions="Center" TextColor="#77B948" FontSize="18"/>
-                </VerticalStackLayout>
-            </Frame>
+            <Label Text="Статистика по категория" FontSize="18" FontAttributes="Bold" Margin="0,10,0,0"/>
 
-            <Frame BackgroundColor="#e1f7d5" CornerRadius="10">
-                <VerticalStackLayout Spacing="5">
-                    <Image Source="edugoal.png" HeightRequest="60" WidthRequest="60"/>
-                    <Label Text="Учене" HorizontalOptions="Center" FontAttributes="Bold"/>
-                    <Label x:Name="LearningPointsLabel" Text="0 Точки" HorizontalOptions="Center" TextColor="#77B948" FontSize="18"/>
-                </VerticalStackLayout>
-            </Frame>
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="15" RowSpacing="15">
 
-            <Frame BackgroundColor="#e1f7d5" CornerRadius="10">
-                <VerticalStackLayout Spacing="5">
-                    <Image Source="personalgoal.png" HeightRequest="60" WidthRequest="60"/>
-                    <Label Text="Лични" HorizontalOptions="Center" FontAttributes="Bold"/>
-                    <Label x:Name="PersonalPointsLabel" Text="0 Точки" HorizontalOptions="Center" TextColor="#77B948" FontSize="18"/>
-                </VerticalStackLayout>
-            </Frame>
+                <Frame Grid.Row="0" Grid.Column="0" BackgroundColor="White" CornerRadius="15" Padding="15" BorderColor="Transparent">
+                    <VerticalStackLayout Spacing="5">
+                        <Image Source="fingoal.png" HeightRequest="50" WidthRequest="50"/>
+                        <Label Text="Финанси" HorizontalOptions="Center" FontAttributes="Bold"/>
+                        <BoxView HeightRequest="1" Color="LightGray"/>
+                        <Label x:Name="finPoints" Text="0 т." TextColor="#77B948" HorizontalOptions="Center" FontAttributes="Bold"/>
+                        <Label x:Name="finCount" Text="0 цели" TextColor="Gray" FontSize="12" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame Grid.Row="0" Grid.Column="1" BackgroundColor="White" CornerRadius="15" Padding="15" BorderColor="Transparent">
+                    <VerticalStackLayout Spacing="5">
+                        <Image Source="edugoal.png" HeightRequest="50" WidthRequest="50"/>
+                        <Label Text="Учене" HorizontalOptions="Center" FontAttributes="Bold"/>
+                        <BoxView HeightRequest="1" Color="LightGray"/>
+                        <Label x:Name="eduPoints" Text="0 т." TextColor="#77B948" HorizontalOptions="Center" FontAttributes="Bold"/>
+                        <Label x:Name="eduCount" Text="0 цели" TextColor="Gray" FontSize="12" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="White" CornerRadius="15" Padding="15" BorderColor="Transparent">
+                    <VerticalStackLayout Spacing="5">
+                        <Image Source="healthgoal.png" HeightRequest="50" WidthRequest="50"/>
+                        <Label Text="Спорт" HorizontalOptions="Center" FontAttributes="Bold"/>
+                        <BoxView HeightRequest="1" Color="LightGray"/>
+                        <Label x:Name="helathPoints" Text="0 т." TextColor="#77B948" HorizontalOptions="Center" FontAttributes="Bold"/>
+                        <Label x:Name="healthCount" Text="0 цели" TextColor="Gray" FontSize="12" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame Grid.Row="1" Grid.Column="1" BackgroundColor="White" CornerRadius="15" Padding="15" BorderColor="Transparent">
+                    <VerticalStackLayout Spacing="5">
+                        <Image Source="personalgoal.png" HeightRequest="50" WidthRequest="50"/>
+                        <Label Text="Лични" HorizontalOptions="Center" FontAttributes="Bold"/>
+                        <BoxView HeightRequest="1" Color="LightGray"/>
+                        <Label x:Name="personalPoints" Text="0 т." TextColor="#77B948" HorizontalOptions="Center" FontAttributes="Bold"/>
+                        <Label x:Name="personalCount" Text="0 цели" TextColor="Gray" FontSize="12" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
 
         </VerticalStackLayout>
     </ScrollView>

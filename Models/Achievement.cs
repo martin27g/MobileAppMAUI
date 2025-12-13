@@ -13,7 +13,7 @@ namespace MobileAppMAUI.Models
         public DateTime Date { get; set; }           // When the achievement was reached
         public double Points { get; set; }           // Points
 
-        // Navigation property back to Goal
+        public bool IsReward { get; set; }
         public Goal Goal { get; set; }
     }
 
