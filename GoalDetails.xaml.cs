@@ -15,28 +15,13 @@ public partial class GoalDetails : ContentPage
     private HttpClient _httpClient = new HttpClient();
     private Weather weatherApi;
 
-    private async void OnAchievementsClicked(object sender, EventArgs e)
-    {
-        // Check if the goal has been saved first (it needs an ID)
-        if (_goal == null || _goal.Id == Guid.Empty)
-        {
-            await DisplayAlert("Error", "Please save the goal before adding achievements.", "OK");
-            return;
-        }
-
-        // Navigate to the new Achievements page (we will create this next)
-        await Navigation.PushAsync(new GoalAchievementsPage(_goal));
-    }
-
+    // ... (Constructors remain the same) ...
     public GoalDetails(DataService dataService, Guid GoalId)
     {
         InitializeComponent();
         _dataService = dataService;
-
         _goal = _dataService.GetGoalById(GoalId);
         BindingContext = _goal;
-
-
         _editing = true;
     }
 
@@ -44,13 +29,7 @@ public partial class GoalDetails : ContentPage
     {
         InitializeComponent();
         _dataService = dataService;
-
-        _goal = new Goal
-        {
-            Id = Guid.NewGuid(),
-            Type = _type
-        };
-
+        _goal = new Goal { Id = Guid.NewGuid(), Type = _type };
         _editing = false;
     }
 
@@ -68,6 +47,43 @@ public partial class GoalDetails : ContentPage
 
         EditButtons.IsVisible = _editing;
         NewButtons.IsVisible = !_editing;
+
+        // 1. Control Checkmark Visibility
+        // Visible only if we are editing an existing goal
+        CheckmarkBtn.IsVisible = _editing;
+    }
+
+    // 2. Handle the Checkmark Click
+    private async void OnCompleteGoalClicked(object sender, EventArgs e)
+    {
+        // "Send 10 points" -> We add an achievement worth 10 points to this goal.
+        // The AchievementFilter page will sum these up later.
+
+        var achievement = new Achievement
+        {
+            Goal = _goal,
+            GoalId = _goal.Id, // Ensure ID linkage if needed
+            Date = DateTime.Now,
+            Points = 10 // Fixed 10 points reward
+        };
+
+        if (_goal.Achievements == null)
+            _goal.Achievements = new System.Collections.ObjectModel.ObservableCollection<Achievement>();
+
+        _goal.Achievements.Add(achievement);
+
+        await DisplayAlert("Браво!", "Успешно добавихте 10 точки към тази цел!", "ОК");
+    }
+
+    // ... (Rest of existing methods: OnAchievementsClicked, OnSaveClicked, etc.) ...
+    private async void OnAchievementsClicked(object sender, EventArgs e)
+    {
+        if (_goal == null || _goal.Id == Guid.Empty)
+        {
+            await DisplayAlert("Error", "Please save the goal before adding achievements.", "OK");
+            return;
+        }
+        await Navigation.PushAsync(new GoalAchievementsPage(_goal));
     }
 
     public async void OnPickerSelectedIndexChanged(object sender, EventArgs e)
@@ -104,12 +120,10 @@ public partial class GoalDetails : ContentPage
 
             if (!double.TryParse(QuantityField.Text, out double quantity))
             {
-                // Show an error message to the user  
                 IncompleteError.IsVisible = true;
                 return;
             }
             _goal.Quantity = quantity;
-            _goal.Quantity = double.Parse(QuantityField.Text);
 
             if (!_editing)
             {
@@ -127,26 +141,24 @@ public partial class GoalDetails : ContentPage
 
     private async void OnDeleteClicked(object sender, EventArgs e)
     {
-        // 1. Ask for confirmation
         bool answer = await DisplayAlert("Изтриване", "Сигурни ли сте, че искате да изтриете тази цел?", "Да", "Не");
-
         if (answer)
         {
-            // 2. Remove the goal from the global list
-            // Note: This assumes your DataService instance variable is named '_dataService'
             if (_dataService.Goals.Contains(_goal))
             {
                 _dataService.Goals.Remove(_goal);
             }
-
-            // 3. Close the page and go back to the list
             await Navigation.PopAsync();
         }
     }
 
     private async void LoadApi()
     {
-        weatherApi = await _httpClient.GetFromJsonAsync<Weather>("https://api.open-meteo.com/v1/forecast?latitude=42.6667&longitude=25.25&current=wind_speed_10m,temperature_2m,rain,cloud_cover&timezone=auto");
-        API.Text = $"Температура: {weatherApi.current.temperature_2m.ToString()} °C, вятър: {weatherApi.current.wind_speed_10m.ToString()} Облачност: {weatherApi.current.cloud_cover.ToString()} %";
+        try
+        {
+            weatherApi = await _httpClient.GetFromJsonAsync<Weather>("https://api.open-meteo.com/v1/forecast?latitude=42.6667&longitude=25.25&current=wind_speed_10m,temperature_2m,rain,cloud_cover&timezone=auto");
+            API.Text = $"Температура: {weatherApi.current.temperature_2m.ToString()} °C, вятър: {weatherApi.current.wind_speed_10m.ToString()} Облачност: {weatherApi.current.cloud_cover.ToString()} %";
+        }
+        catch { /* Handle API error silently or log */ }
     }
 }

@@ -15,8 +15,7 @@ namespace MobileAppMAUI
 
         public async void OnClickAchivements(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new AchivementFilter());
-            //await Navigation.PopAsync();
+            await Navigation.PushAsync(new AchivementFilter(_dataService));
         }
 
         public async void OnClickMyGoals(object sender, EventArgs e)

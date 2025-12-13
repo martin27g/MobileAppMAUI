@@ -2,102 +2,44 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileAppMAUI.AchivementFilter"
-             Title="AchivementFilter"
-             BackgroundColor="#F0ECE7">
+             Title="Общ Преглед"
+             Padding="15">
     <ScrollView>
-        <VerticalStackLayout>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+        <VerticalStackLayout Spacing="20">
+            <Label Text="Точки по категория" FontSize="22" FontAttributes="Bold" HorizontalOptions="Center"/>
 
-                <Image Source="fingoal.png"
-                WidthRequest="100"
-                HeightRequest="100"
-                Aspect="AspectFit"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Grid.Row="0" 
-                Grid.Column="0" />
-                <Image Source="edugoal.png"
-               WidthRequest="100"
-               HeightRequest="100"
-               Aspect="AspectFit"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"
-               Grid.Row="0" 
-               Grid.Column="2" />
-                <Image Source="healthgoal.png"
-                WidthRequest="100"
-                HeightRequest="100"
-                Aspect="AspectFit"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Grid.Row="2" 
-                Grid.Column="0" />
-                <Image Source="personalgoal.png"
-                WidthRequest="100"
-                HeightRequest="100"
-                Aspect="AspectFit"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                Grid.Row="2" 
-                Grid.Column="2" />
-                <Label x:Name="finPoints"
-                 Text="Точки" 
-                 FontFamily="Comic Sans MS" 
-                 FontSize="16" 
-                 FontAttributes="Bold" 
-                 Grid.Row="1" 
-                 Grid.Column="0" 
-                 HorizontalOptions="Center" 
-                 VerticalOptions="Center"
-                 Padding="5"
-                 BackgroundColor="White"/>
+            <Frame BackgroundColor="#e1f7d5" CornerRadius="10">
+                <VerticalStackLayout Spacing="5">
+                    <Image Source="fingoal.png" HeightRequest="60" WidthRequest="60"/>
+                    <Label Text="Финанси" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <Label x:Name="FinancePointsLabel" Text="0 Точки" HorizontalOptions="Center" TextColor="#77B948" FontSize="18"/>
+                </VerticalStackLayout>
+            </Frame>
 
-                <Label x:Name="eduPoints"
-                   Text="Точки" 
-                   FontFamily="Comic Sans MS" 
-                   FontSize="16" 
-                   FontAttributes="Bold" 
-                   Grid.Row="1" 
-                   Grid.Column="2" 
-                   HorizontalOptions="Center" 
-                   VerticalOptions="Center"
-                   Padding="5"
-                   BackgroundColor="White"/>
+            <Frame BackgroundColor="#e1f7d5" CornerRadius="10">
+                <VerticalStackLayout Spacing="5">
+                    <Image Source="healthgoal.png" HeightRequest="60" WidthRequest="60"/>
+                    <Label Text="Спорт" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <Label x:Name="SportPointsLabel" Text="0 Точки" HorizontalOptions="Center" TextColor="#77B948" FontSize="18"/>
+                </VerticalStackLayout>
+            </Frame>
 
-                <Label x:Name="helathPoints"
-                  Text="Точки" 
-                  FontFamily="Comic Sans MS" 
-                  FontSize="16" 
-                  FontAttributes="Bold" 
-                  Grid.Row="3" 
-                  Grid.Column="0" 
-                  HorizontalOptions="Center" 
-                  VerticalOptions="Center"
-                  Padding="5"
-                  BackgroundColor="White"/>
-                <Label x:Name="personalPoints"
-                   Text="Точки" 
-                   FontFamily="Comic Sans MS" 
-                   FontSize="16" 
-                   FontAttributes="Bold" 
-                   Grid.Row="3" 
-                   Grid.Column="2" 
-                   HorizontalOptions="Center" 
-                   VerticalOptions="Center"
-                   Padding="5"
-                   BackgroundColor="White"/>
-            </Grid>
+            <Frame BackgroundColor="#e1f7d5" CornerRadius="10">
+                <VerticalStackLayout Spacing="5">
+                    <Image Source="edugoal.png" HeightRequest="60" WidthRequest="60"/>
+                    <Label Text="Учене" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <Label x:Name="LearningPointsLabel" Text="0 Точки" HorizontalOptions="Center" TextColor="#77B948" FontSize="18"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame BackgroundColor="#e1f7d5" CornerRadius="10">
+                <VerticalStackLayout Spacing="5">
+                    <Image Source="personalgoal.png" HeightRequest="60" WidthRequest="60"/>
+                    <Label Text="Лични" HorizontalOptions="Center" FontAttributes="Bold"/>
+                    <Label x:Name="PersonalPointsLabel" Text="0 Точки" HorizontalOptions="Center" TextColor="#77B948" FontSize="18"/>
+                </VerticalStackLayout>
+            </Frame>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
