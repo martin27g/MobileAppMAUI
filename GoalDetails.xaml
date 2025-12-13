@@ -102,6 +102,7 @@
                         Grid.ColumnSpan ="2" 
                         BackgroundColor="#77B948" 
                         Text="Какво постигнах" 
+                        Clicked="OnAchievementsClicked"
                         HorizontalOptions="FillAndExpand"/>
             </Grid>
 

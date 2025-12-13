@@ -67,6 +67,9 @@
 	  <MauiXaml Update="AchivementFilter.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="GoalAchievementsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="GoalDetails.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -15,6 +15,19 @@ public partial class GoalDetails : ContentPage
     private HttpClient _httpClient = new HttpClient();
     private Weather weatherApi;
 
+    private async void OnAchievementsClicked(object sender, EventArgs e)
+    {
+        // Check if the goal has been saved first (it needs an ID)
+        if (_goal == null || _goal.Id == Guid.Empty)
+        {
+            await DisplayAlert("Error", "Please save the goal before adding achievements.", "OK");
+            return;
+        }
+
+        // Navigate to the new Achievements page (we will create this next)
+        await Navigation.PushAsync(new GoalAchievementsPage(_goal));
+    }
+
     public GoalDetails(DataService dataService, Guid GoalId)
     {
         InitializeComponent();

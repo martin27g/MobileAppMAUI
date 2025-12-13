@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -34,8 +35,13 @@ namespace MobileAppMAUI.Models
         private double _quantity;
         private GoalFrequency _frequency = GoalFrequency.None;
         private DateTime? _dueDate;
-        private List<Achievement> _achievements = new();
-        
+        private ObservableCollection<Achievement> _achievements = new();
+        public ObservableCollection<Achievement> Achievements
+        {
+            get => _achievements;
+            set => SetProperty(ref _achievements, value);
+        }
+
         public Guid Id
         {
             get => _id;
@@ -78,11 +84,7 @@ namespace MobileAppMAUI.Models
             set => SetProperty(ref _dueDate, value);
         }
 
-        public List<Achievement> Achievements
-        {
-            get => _achievements;
-            set => SetProperty(ref _achievements, value);
-        }
+    
 
         // 🔔 INotifyPropertyChanged implementation
         public event PropertyChangedEventHandler PropertyChanged;

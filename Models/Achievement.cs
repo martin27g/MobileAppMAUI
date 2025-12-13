@@ -11,7 +11,7 @@ namespace MobileAppMAUI.Models
         public int Id { get; set; }                  // Unique identifier
         public int GoalId { get; set; }              // Foreign key
         public DateTime Date { get; set; }           // When the achievement was reached
-        public int Points { get; set; }           // Points
+        public double Points { get; set; }           // Points
 
         // Navigation property back to Goal
         public Goal Goal { get; set; }
