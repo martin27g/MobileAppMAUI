@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileAppMAUI.MyGoals"
+             BackgroundColor="#F0ECE7"
+             Padding="15">
+    
+    <Grid RowSpacing="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width='1*' />
+            <ColumnDefinition Width='1*' />
+            <ColumnDefinition Width='1*' />
+            <ColumnDefinition Width='1*' />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="8*" />
+        </Grid.RowDefinitions>
+
+        <!--   HEADER   -->
+        <BoxView
+            Grid.Row="0" 
+            Grid.Column="0"
+            Grid.ColumnSpan="3" 
+            BackgroundColor="#3E94C1"
+            CornerRadius="8" />
+        <Label
+            Grid.Row="0" 
+            Grid.Column="0"
+            Grid.ColumnSpan="3" 
+            Text="Моите цели"
+            FontSize="Title"
+            FontAttributes="Bold"
+            FontFamily="Pixel"
+            VerticalOptions="Center"
+            HorizontalOptions="Center" />
+        <ImageButton 
+            Grid.Row="0" 
+            Grid.Column="3"
+            Source="plus.png"
+            BackgroundColor="Transparent"
+            Clicked="OnAddButtonClicked"
+            Pressed="OnButtonPressed"
+            Released="OnButtonReleased"
+            />
+
+        <!--   FILTER BUTTONS   -->
+        <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2" VerticalOptions="Center">
+            <ImageButton
+                x:Name="FinGoalButton"
+                Source="fingoal.png"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Clicked="OnFilterButtonClicked"
+                CommandParameter="Finance"
+                HeightRequest="65" WidthRequest="65"/>
+            <BoxView CornerRadius="2" HeightRequest="3" Color="Green" IsVisible="False" WidthRequest="40" HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2" VerticalOptions="Center">
+            <ImageButton
+                x:Name="EduGoalButton"
+                Source="edugoal.png"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Clicked="OnFilterButtonClicked"
+                CommandParameter="Learning" 
+                HeightRequest="65" WidthRequest="65"/>
+
+            <BoxView CornerRadius="2" HeightRequest="3" Color="#3E94C1" IsVisible="False" WidthRequest="40" HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Row="1" Grid.Column="2" Spacing="2" VerticalOptions="Center">
+            <ImageButton
+                x:Name="HealthGoalButton"
+                Source="healthgoal.png"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent" 
+                Clicked="OnFilterButtonClicked"
+                CommandParameter="Sport"
+                HeightRequest="65" WidthRequest="65"/>
+
+            <BoxView CornerRadius="2" HeightRequest="3" Color="#f56955" IsVisible="False" WidthRequest="40" HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Row="1" Grid.Column="3" Spacing="2" VerticalOptions="Center">
+            <ImageButton 
+                x:Name="PersonalGoalButton"
+                Source="personalgoal.png"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Clicked="OnFilterButtonClicked"
+                CommandParameter="Personal" 
+                HeightRequest="65" WidthRequest="65"/>
+
+            <BoxView CornerRadius="2" HeightRequest="3" Color="#fcdbb9" IsVisible="False" WidthRequest="40" HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+
+        <!--    GOALS LIST   -->
+        <CollectionView 
+            Grid.Row="2" 
+            Grid.ColumnSpan="4"
+            ItemsSource="{Binding FilteredGoals}" 
+            SelectionMode="Single"
+            SelectionChanged="OnItemSelected">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout
+                    Orientation="Vertical"
+                    ItemSpacing="5" />
+            </CollectionView.ItemsLayout>
+            
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border 
+                        Stroke="Black"
+                        StrokeThickness="1"
+                        BackgroundColor="White"
+                        StrokeShape="RoundRectangle 8">
+                        <VerticalStackLayout Padding="10">
+                            <Label 
+                                Text="{Binding Description}"
+                                VerticalOptions="Fill" 
+                                HorizontalOptions="Start"
+                                FontAttributes="Bold"
+                                FontSize="Medium" />
+                            <Label 
+                                Text="{Binding Frequency}"
+                                VerticalOptions="Fill" 
+                                HorizontalOptions="Start" />
+
+                            <Label 
+                                x:Name="lbl_What"
+                                Text="{Binding Measure}"
+                                VerticalOptions="Fill" 
+                                HorizontalOptions="Start" />
+                            <Label 
+                                 x:Name="lbl_Wh"
+                                 Text="{Binding Quantity}"
+                                 VerticalOptions="Fill" 
+                                 HorizontalOptions="Start" />
+                            <Label 
+                                x:Name="lbl_DueDate"
+                                Text="{Binding DueDate}"
+                                VerticalOptions="Fill" 
+                                HorizontalOptions="Start" />
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

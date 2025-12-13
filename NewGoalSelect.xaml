@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileAppMAUI.NewGoalSelect"
+             BackgroundColor="#F0ECE7"
+             Padding="15">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width='*' />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="9*" />
+        </Grid.RowDefinitions>
+        
+        <!--   ЗАГЛАВКА   -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width='3*' />
+                <ColumnDefinition Width='1*' />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <BoxView 
+                Grid.Row="0" 
+                Grid.Column="0" 
+                BackgroundColor="#3E94C1"
+                CornerRadius="5" />
+            <Label
+                Grid.Row="0" 
+                Grid.Column="0"
+                Text="Една Нова Цел"
+                FontAutoScalingEnabled="True"
+                FontFamily="Pixel"
+                FontSize="Title"
+                VerticalOptions="Center"
+                HorizontalOptions="Center" />
+            <Image 
+                Grid.Row="0" 
+                Grid.Column="1"
+                Source="smiley.png"
+                BackgroundColor="Transparent" />
+        </Grid>
+
+        <!--   ТИПОВЕ ЦЕЛИ   -->
+        <Grid Grid.Row="1" ColumnSpacing="30" RowSpacing="30" Padding="15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width='*' />
+                <ColumnDefinition Width='*' />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <ImageButton 
+                Grid.Row="0" 
+                Grid.Column="0"
+                VerticalOptions="End"
+                Source="fingoal.png"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Clicked="CreateFinClicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+            <ImageButton 
+                Grid.Row="0" 
+                Grid.Column="1"
+                VerticalOptions="End"
+                Source="edugoal.png"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Clicked="CreateEduClicked" 
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"
+                />
+            <ImageButton 
+                Grid.Row="1" 
+                Grid.Column="0"
+                VerticalOptions="Start"
+                Source="healthgoal.png"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Clicked="CreateHealthClicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+            <ImageButton 
+                Grid.Row="1" 
+                Grid.Column="1"
+                VerticalOptions="Start"
+                Source="personalgoal.png"
+                Aspect="AspectFit"
+                BackgroundColor="Transparent"
+                Clicked="CreatePersonalClicked"
+                Pressed="OnButtonPressed"
+                Released="OnButtonReleased"/>
+        </Grid>
+    </Grid>
+</ContentPage>

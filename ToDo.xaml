@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileAppMAUI.ToDo"
+             Title="ToDo">
+    <ScrollView>
+        <VerticalStackLayout>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <BoxView BackgroundColor="#EFAB27" Grid.Row="0" Grid.Column="0" CornerRadius="5"/>
+                <Label 
+                   Text="Днес е хубав ден да..."
+                   VerticalOptions="Fill" 
+                   HorizontalOptions="Center"
+                   WidthRequest="200"
+                   HeightRequest="60"
+                   Grid.Row="0" 
+                   Grid.Column="0" />
+
+            </Grid>
+            <CollectionView  ItemsSource="{Binding FilteredGoals}" 
+                    SelectionMode="Single"
+                    SelectionChanged="OnItemSelected">
+
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Span="0" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+
+                        <Border
+                                Stroke="Black"
+                                StrokeThickness="2"
+                                BackgroundColor="#F0ECE7"
+                                StrokeShape="RoundRectangle 8" >
+                            <VerticalStackLayout>
+                                <Image Source ="{Binding CurrentImage} " MaximumHeightRequest="50" MaximumWidthRequest="50" HeightRequest="50" HorizontalOptions="StartAndExpand"/>
+                                <Label 
+                                    Text="{Binding Description}"
+                                    VerticalOptions="Fill" 
+                                    HorizontalOptions="StartAndExpand"
+                                    WidthRequest="100"
+                                    HeightRequest="20"
+                                    />
+                                <Label 
+                                    Text="{Binding Frequency}"
+                                    VerticalOptions="Fill" 
+                                    HorizontalOptions="StartAndExpand"
+                                    WidthRequest="100"
+                                    HeightRequest="20"
+                                    />
+                                <Label x:Name="lbl_DueDate"
+                                    Text="{Binding DueDate}"
+                                    VerticalOptions="Fill" 
+                                    HorizontalOptions="StartAndExpand"
+                                    WidthRequest="100"
+                                    HeightRequest="20"
+                                    />
+                            </VerticalStackLayout>
+                        </Border>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

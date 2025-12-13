@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileAppMAUI.AchivementFilter"
+             Title="AchivementFilter"
+             BackgroundColor="#F0ECE7">
+    <ScrollView>
+        <VerticalStackLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Image Source="fingoal.png"
+                WidthRequest="100"
+                HeightRequest="100"
+                Aspect="AspectFit"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Grid.Row="0" 
+                Grid.Column="0" />
+                <Image Source="edugoal.png"
+               WidthRequest="100"
+               HeightRequest="100"
+               Aspect="AspectFit"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Grid.Row="0" 
+               Grid.Column="2" />
+                <Image Source="healthgoal.png"
+                WidthRequest="100"
+                HeightRequest="100"
+                Aspect="AspectFit"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Grid.Row="2" 
+                Grid.Column="0" />
+                <Image Source="personalgoal.png"
+                WidthRequest="100"
+                HeightRequest="100"
+                Aspect="AspectFit"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Grid.Row="2" 
+                Grid.Column="2" />
+                <Label x:Name="finPoints"
+                 Text="Точки" 
+                 FontFamily="Comic Sans MS" 
+                 FontSize="16" 
+                 FontAttributes="Bold" 
+                 Grid.Row="1" 
+                 Grid.Column="0" 
+                 HorizontalOptions="Center" 
+                 VerticalOptions="Center"
+                 Padding="5"
+                 BackgroundColor="White"/>
+
+                <Label x:Name="eduPoints"
+                   Text="Точки" 
+                   FontFamily="Comic Sans MS" 
+                   FontSize="16" 
+                   FontAttributes="Bold" 
+                   Grid.Row="1" 
+                   Grid.Column="2" 
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center"
+                   Padding="5"
+                   BackgroundColor="White"/>
+
+                <Label x:Name="helathPoints"
+                  Text="Точки" 
+                  FontFamily="Comic Sans MS" 
+                  FontSize="16" 
+                  FontAttributes="Bold" 
+                  Grid.Row="3" 
+                  Grid.Column="0" 
+                  HorizontalOptions="Center" 
+                  VerticalOptions="Center"
+                  Padding="5"
+                  BackgroundColor="White"/>
+                <Label x:Name="personalPoints"
+                   Text="Точки" 
+                   FontFamily="Comic Sans MS" 
+                   FontSize="16" 
+                   FontAttributes="Bold" 
+                   Grid.Row="3" 
+                   Grid.Column="2" 
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center"
+                   Padding="5"
+                   BackgroundColor="White"/>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

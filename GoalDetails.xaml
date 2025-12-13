@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileAppMAUI.GoalDetails"
+             BackgroundColor="#F0ECE7"
+             Padding="15">
+    <ScrollView>
+        <VerticalStackLayout>
+            <!--<Label Text="{Binding Id}"
+                   TextColor="AliceBlue"
+                   VerticalOptions="Center" 
+                   HorizontalOptions="Start" />-->
+            <Image 
+                x:Name="TypeImage" 
+                Source="{Binding CurrentImage}" 
+                HeightRequest="150" 
+                WidthRequest="150" />
+            <Label
+                x:Name="API"
+                HorizontalOptions="Center" />
+            <Label 
+                Text="Цел"
+                VerticalOptions="Center" 
+                HorizontalOptions="Start" />
+            <Entry 
+                x:Name = "DescriptionField" 
+                Text="{Binding Description , Mode=TwoWay}" 
+                Placeholder="Цел" />
+            <Label
+                Text="Какво"
+                VerticalOptions="Center" 
+                HorizontalOptions="Start" />
+            <Entry 
+                x:Name = "MeasureField" 
+                Text="{Binding Measure}" 
+                Placeholder="стъпки, километри" />
+            <Label 
+                Text="Колко"
+                VerticalOptions="Center" 
+                HorizontalOptions="Start" />
+            <Entry 
+                x:Name = "QuantityField" 
+                Text="{Binding Quantity}" 
+                Placeholder="колко" />
+            <Label 
+                Text="Как"
+                VerticalOptions="Center"
+                HorizontalOptions="Start" />
+            <Picker 
+                x:Name = "TypePicker" 
+                SelectedIndex="{Binding Frequency}" 
+                SelectedIndexChanged="OnPickerSelectedIndexChanged">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Дата</x:String>
+                        <x:String>Ежедневно</x:String>
+                        <x:String>Седмично</x:String>
+                        <x:String>Месечно</x:String>
+                        <x:String>Годишно</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <Label 
+                x:Name="DateLabel"
+                Text="До кога"
+                VerticalOptions="Center" 
+                HorizontalOptions="Start" />
+            <DatePicker 
+                x:Name="DatePicker" 
+                Date="{Binding DueDate, Mode=TwoWay}" />
+
+            <BoxView HeightRequest="10" BackgroundColor="Transparent"/>
+
+            <Label 
+                x:Name="IncompleteError"
+                IsVisible="False"
+                TextColor="Red"
+                Text="Трябва да попълните всички полета!"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"/>
+            <Grid x:Name="EditButtons" RowSpacing="10" ColumnSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Button Grid.Row = "0" 
+                        Grid.Column = "0" 
+                        BackgroundColor="Grey" 
+                        Text="Запази" 
+                        Clicked="OnSaveClicked"/>
+                <Button Grid.Row = "0" 
+                        Grid.Column = "1" 
+                        BackgroundColor="Grey" 
+                        Text="Изтрий"
+                        Clicked="OnDeleteClicked"/>
+                <Button Grid.Row = "1"
+                        Grid.ColumnSpan ="2" 
+                        BackgroundColor="#77B948" 
+                        Text="Какво постигнах" 
+                        HorizontalOptions="FillAndExpand"/>
+            </Grid>
+
+            <Grid x:Name="NewButtons" RowSpacing="10" ColumnSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Button Grid.Row = "0" 
+                        Grid.Column = "0" 
+                        BackgroundColor="#77B948" 
+                        Text="Запази" 
+                        Clicked="OnSaveClicked"/>
+                <Button Grid.Row = "0"
+                        Grid.Column = "1" 
+                        BackgroundColor="Gray" 
+                        Text="Отказ" 
+                        Clicked="OnCancelClicked"/>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
