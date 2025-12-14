@@ -10,7 +10,6 @@ public partial class GoalDetails : ContentPage
     private Goal _goal;
     private bool _editing;
     private HttpClient _httpClient = new HttpClient();
-    private Weather weatherApi;
 
     public GoalDetails(DataService dataService, Guid GoalId)
     {
@@ -29,9 +28,11 @@ public partial class GoalDetails : ContentPage
         _editing = false;
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
-        LoadApi();
+        base.OnAppearing(); // Good practice to call base
+
+        // 1. Setup UI based on Goal Type
         switch (_goal.Type)
         {
             case GoalType.Finance: TypeImage.Source = "fingoal.png"; break;
@@ -40,29 +41,74 @@ public partial class GoalDetails : ContentPage
             case GoalType.Sport: TypeImage.Source = "healthgoal.png"; break;
         }
 
+        // 2. Load the specific API data
+        await LoadApiData();
+
         EditButtons.IsVisible = _editing;
         NewButtons.IsVisible = !_editing;
-
-        // UPDATED: Always show checkmark if we are in edit mode
-        // It no longer hides after you click it.
         CheckmarkBtn.IsVisible = _editing;
     }
 
+    private async Task LoadApiData()
+    {
+
+        try
+        {
+            switch (_goal.Type)
+            {
+                // CASE 1: SPORT -> Weather Forecast
+                case GoalType.Sport:
+                    var weatherData = await _httpClient.GetFromJsonAsync<Weather>("https://api.open-meteo.com/v1/forecast?latitude=42.6667&longitude=25.25&current=wind_speed_10m,temperature_2m,rain,cloud_cover&timezone=auto");
+                    if (weatherData != null)
+                    {
+                        API.Text = $"Времето навън: {weatherData.current.temperature_2m} °C, Вятър: {weatherData.current.wind_speed_10m} km/h";
+                    }
+                    break;
+
+                // CASE 2: FINANCE -> Exchange Rate (USD to BGN)
+                case GoalType.Finance:
+                    var financeData = await _httpClient.GetFromJsonAsync<ExchangeRateResponse>("https://api.frankfurter.app/latest?from=USD&to=BGN");
+                    if (financeData != null && financeData.rates.ContainsKey("BGN"))
+                    {
+                        API.Text = $"Курс на долара: 1 USD = {financeData.rates["BGN"]:F2} BGN";
+                    }
+                    break;
+
+                // CASE 3: PERSONAL -> Motivational Quote
+                case GoalType.Personal:
+                    var quoteData = await _httpClient.GetFromJsonAsync<QuoteResponse>("https://dummyjson.com/quotes/random");
+                    if (quoteData != null)
+                    {
+                        API.Text = $"Myсъл за деня:\n\"{quoteData.quote}\"\n- {quoteData.author}";
+                    }
+                    break;
+
+                // CASE 4: LEARNING (Optional default)
+                case GoalType.Learning:
+                    API.Text = "Ученето е най-добрата инвестиция!";
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            API.Text = "Няма връзка със сървъра.";
+            System.Diagnostics.Debug.WriteLine(ex.Message);
+        }
+    }
+
+    // --- Button Handlers ---
+
     private async void OnCompleteGoalClicked(object sender, EventArgs e)
     {
-        // 1. Mark as Achieved (so it counts in the "Total Goals" stats)
         _goal.IsAchieved = true;
 
-        // Note: We REMOVED the line that hides the button.
-
-        // 2. Add the 10 Points Reward (Repeatedly)
         var achievement = new Achievement
         {
             Goal = _goal,
             GoalId = _goal.Id,
             Date = DateTime.Now,
             Points = 10,
-            IsReward = true // Counts towards Score, but ignored by Progress Bar
+            IsReward = true
         };
 
         if (_goal.Achievements == null)
@@ -83,7 +129,7 @@ public partial class GoalDetails : ContentPage
         await Navigation.PushAsync(new GoalAchievementsPage(_goal));
     }
 
-    public async void OnPickerSelectedIndexChanged(object sender, EventArgs e)
+    public void OnPickerSelectedIndexChanged(object sender, EventArgs e)
     {
         if (TypePicker.SelectedItem != null)
         {
@@ -96,9 +142,9 @@ public partial class GoalDetails : ContentPage
     public async void OnSaveClicked(object sender, EventArgs e)
     {
         if (TypePicker.SelectedItem == null ||
-            DescriptionField.Text.Equals(String.Empty) ||
-            MeasureField.Text.Equals(String.Empty) ||
-            QuantityField.Text.Equals(String.Empty))
+            string.IsNullOrEmpty(DescriptionField.Text) ||
+            string.IsNullOrEmpty(MeasureField.Text) ||
+            string.IsNullOrEmpty(QuantityField.Text))
         {
             IncompleteError.IsVisible = true;
         }
@@ -148,14 +194,21 @@ public partial class GoalDetails : ContentPage
             await Navigation.PopAsync();
         }
     }
+}
 
-    private async void LoadApi()
-    {
-        try
-        {
-            weatherApi = await _httpClient.GetFromJsonAsync<Weather>("https://api.open-meteo.com/v1/forecast?latitude=42.6667&longitude=25.25&current=wind_speed_10m,temperature_2m,rain,cloud_cover&timezone=auto");
-            API.Text = $"Температура: {weatherApi.current.temperature_2m.ToString()} °C, вятър: {weatherApi.current.wind_speed_10m.ToString()} Облачност: {weatherApi.current.cloud_cover.ToString()} %";
-        }
-        catch { }
-    }
+// --- Helper Models for APIs ---
+
+public class ExchangeRateResponse
+{
+    public double amount { get; set; }
+    public string @base { get; set; }
+    public string date { get; set; }
+    public Dictionary<string, double> rates { get; set; }
+}
+
+public class QuoteResponse
+{
+    public int id { get; set; }
+    public string quote { get; set; }
+    public string author { get; set; }
 }

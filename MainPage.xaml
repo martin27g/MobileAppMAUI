@@ -7,7 +7,7 @@
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
-
+            
             <Image Source="goalflow.png" WidthRequest="300" />
 
             <Grid RowSpacing="10" ColumnSpacing="0" >
