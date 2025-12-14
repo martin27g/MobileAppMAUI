@@ -19,7 +19,10 @@
 
             <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="15" RowSpacing="15">
 
-                <Frame Grid.Row="0" Grid.Column="0" BackgroundColor="White" CornerRadius="15" Padding="15" BorderColor="Transparent">
+                <Frame Grid.Row="0" Grid.Column="0" BackgroundColor="White" CornerRadius="15" Padding="15">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnFinanceTapped"/>
+                    </Frame.GestureRecognizers>
                     <VerticalStackLayout Spacing="5">
                         <Image Source="fingoal.png" HeightRequest="50" WidthRequest="50"/>
                         <Label Text="Финанси" HorizontalOptions="Center" FontAttributes="Bold"/>
@@ -29,7 +32,10 @@
                     </VerticalStackLayout>
                 </Frame>
 
-                <Frame Grid.Row="0" Grid.Column="1" BackgroundColor="White" CornerRadius="15" Padding="15" BorderColor="Transparent">
+                <Frame Grid.Row="0" Grid.Column="1" BackgroundColor="White" CornerRadius="15" Padding="15">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnEducationTapped"/>
+                    </Frame.GestureRecognizers>
                     <VerticalStackLayout Spacing="5">
                         <Image Source="edugoal.png" HeightRequest="50" WidthRequest="50"/>
                         <Label Text="Учене" HorizontalOptions="Center" FontAttributes="Bold"/>
@@ -39,7 +45,10 @@
                     </VerticalStackLayout>
                 </Frame>
 
-                <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="White" CornerRadius="15" Padding="15" BorderColor="Transparent">
+                <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="White" CornerRadius="15" Padding="15">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnSportTapped"/>
+                    </Frame.GestureRecognizers>
                     <VerticalStackLayout Spacing="5">
                         <Image Source="healthgoal.png" HeightRequest="50" WidthRequest="50"/>
                         <Label Text="Спорт" HorizontalOptions="Center" FontAttributes="Bold"/>
@@ -49,7 +58,10 @@
                     </VerticalStackLayout>
                 </Frame>
 
-                <Frame Grid.Row="1" Grid.Column="1" BackgroundColor="White" CornerRadius="15" Padding="15" BorderColor="Transparent">
+                <Frame Grid.Row="1" Grid.Column="1" BackgroundColor="White" CornerRadius="15" Padding="15">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnPersonalTapped"/>
+                    </Frame.GestureRecognizers>
                     <VerticalStackLayout Spacing="5">
                         <Image Source="personalgoal.png" HeightRequest="50" WidthRequest="50"/>
                         <Label Text="Лични" HorizontalOptions="Center" FontAttributes="Bold"/>

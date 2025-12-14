@@ -72,4 +72,25 @@ public partial class AchivementFilter : ContentPage
         personalPoints.Text = $"{personalScore} т.";
         personalCount.Text = $"{personalGoals} цели";
     }
-}
+
+        private async void OnFinanceTapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PushAsync(new GoalTypeDetailsPage(_dataService, GoalType.Finance));
+    }
+
+    private async void OnEducationTapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PushAsync(new GoalTypeDetailsPage(_dataService, GoalType.Learning));
+    }
+
+    private async void OnSportTapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PushAsync(new GoalTypeDetailsPage(_dataService, GoalType.Sport));
+    }
+
+    private async void OnPersonalTapped(object sender, TappedEventArgs e)
+    {
+        await Navigation.PushAsync(new GoalTypeDetailsPage(_dataService, GoalType.Personal));
+    }
+
+    }

@@ -73,6 +73,9 @@
 	  <MauiXaml Update="GoalDetails.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="GoalTypeDetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MyGoals.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
