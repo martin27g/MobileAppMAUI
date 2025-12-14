@@ -10,12 +10,13 @@
                FontSize="22" 
                FontAttributes="Bold" 
                HorizontalOptions="Center"
-               TextColor="#77B948"/>
+               TextColor="#77B948"
+               FontFamily="Pixel"/>
 
         <CollectionView Grid.Row="1" x:Name="GoalsList">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Margin="0,5" Padding="15" BorderColor="LightGray" CornerRadius="10">
+                    <Frame Margin="0,5" Padding="15" BorderColor="White" CornerRadius="10">
                         <Grid ColumnDefinitions="*, Auto">
                             <Label Grid.Column="0" 
                                    Text="{Binding Description}" 

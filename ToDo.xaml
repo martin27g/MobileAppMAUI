@@ -1,77 +1,93 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:MobileAppMAUI.Models"
              x:Class="MobileAppMAUI.ToDo"
              Title="ToDo">
-    <ScrollView>
-        <VerticalStackLayout>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <BoxView BackgroundColor="#EFAB27" Grid.Row="0" Grid.Column="0" CornerRadius="5"/>
-                <Label 
-                   Text="Днес е хубав ден да..."
-                   VerticalOptions="Fill" 
+    <Grid RowDefinitions="Auto, *"
+          HorizontalOptions="Center"
+          MaximumWidthRequest="600"
+          Margin="20"
+          RowSpacing="15">
+
+        <Border Grid.Row="0" 
+                BackgroundColor="#EFAB29" 
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 5" 
+                HeightRequest="60" 
+                Padding="10">
+            <Label Text="Днес е хубав ден да..."
+                   TextColor="White"
+                   FontAttributes="Bold"
                    HorizontalOptions="Center"
-                   WidthRequest="200"
-                   HeightRequest="60"
-                   Grid.Row="0" 
-                   Grid.Column="0" />
+                   VerticalOptions="Center"
+                   FontFamily="Pixel"
+                   FontSize="12"/>
+        </Border>
 
-            </Grid>
-            <CollectionView  ItemsSource="{Binding FilteredGoals}" 
-                    SelectionMode="Single"
-                    SelectionChanged="OnItemSelected">
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding FilteredGoals}"
+                        SelectionMode="Single"
+                        SelectionChanged="OnItemSelected">
 
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Span="0" Orientation="Vertical" />
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="1" VerticalItemSpacing="10" HorizontalItemSpacing="10" />
+            </CollectionView.ItemsLayout>
 
-                        <Border
-                                Stroke="Black"
-                                StrokeThickness="2"
-                                BackgroundColor="#F0ECE7"
-                                StrokeShape="RoundRectangle 8" >
-                            <VerticalStackLayout>
-                                <Image Source ="{Binding CurrentImage} " MaximumHeightRequest="50" MaximumWidthRequest="50" HeightRequest="50" HorizontalOptions="StartAndExpand"/>
-                                <Label 
-                                    Text="{Binding Description}"
-                                    VerticalOptions="Fill" 
-                                    HorizontalOptions="StartAndExpand"
-                                    WidthRequest="100"
-                                    HeightRequest="20"
-                                    />
-                                <Label 
-                                    Text="{Binding Frequency}"
-                                    VerticalOptions="Fill" 
-                                    HorizontalOptions="StartAndExpand"
-                                    WidthRequest="100"
-                                    HeightRequest="20"
-                                    />
-                                <Label x:Name="lbl_DueDate"
-                                    Text="{Binding DueDate}"
-                                    VerticalOptions="Fill" 
-                                    HorizontalOptions="StartAndExpand"
-                                    WidthRequest="100"
-                                    HeightRequest="20"
-                                    />
-                            </VerticalStackLayout>
-                        </Border>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Goal">
+                    <Border BackgroundColor="Bisque"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 8"
+                            Padding="10">
 
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                        <VerticalStackLayout Spacing="5" >
 
+                            <Image HeightRequest="40" WidthRequest="40">
+                                <Image.Triggers>
+                                    <DataTrigger TargetType="Image" Binding="{Binding Type}" Value="Finance" >
+                                        <Setter Property="Source" Value="fingoal.png"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Image" Binding="{Binding Type}" Value="Sport">
+                                        <Setter Property="Source" Value="healthgoal.png"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Image" Binding="{Binding Type}" Value="Learning">
+                                        <Setter Property="Source" Value="edugoal.png"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Image" Binding="{Binding Type}" Value="Personal">
+                                        <Setter Property="Source" Value="personalgoal.png"/>
+                                    </DataTrigger>
+                                </Image.Triggers>
+                            </Image>
 
+                            <Label Text="{Binding Description}"
+                                   FontAttributes="Bold"
+                                   TextColor="#333"
+                                   HorizontalOptions="Center"/>
 
-        </VerticalStackLayout>
-    </ScrollView>
+                            <StackLayout>
+                                <Label Text="{Binding Frequency}" FontSize="10" TextColor="#666" HorizontalOptions="Center">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding Frequency}" Value="None">
+                                            <Setter Property="IsVisible" Value="False"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+
+                                <Label Text="{Binding DueDate, StringFormat='{0:dd.MM}'}" FontSize="10" TextColor="#E63946" HorizontalOptions="Center">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding DueDate}" Value="{x:Null}">
+                                            <Setter Property="IsVisible" Value="False"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </StackLayout>
+
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>

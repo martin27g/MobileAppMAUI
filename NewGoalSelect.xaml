@@ -37,7 +37,9 @@
                 FontFamily="Pixel"
                 FontSize="Title"
                 VerticalOptions="Center"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                TextColor="White"/>
             <Image 
                 Grid.Row="0" 
                 Grid.Column="1"

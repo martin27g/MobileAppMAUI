@@ -34,7 +34,8 @@
             FontAttributes="Bold"
             FontFamily="Pixel"
             VerticalOptions="Center"
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center"
+            TextColor="White"/>
         <ImageButton 
             Grid.Row="0" 
             Grid.Column="3"

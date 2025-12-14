@@ -40,7 +40,7 @@ public partial class MainPage : ContentPage
         AchievedPointsLabel.Text = $"{totalPoints} Точки";
 
         // Shows "2 / 5 Изпълнени цели"
-        TotalGoalsLabel.Text = $"{achievedCount} / {totalCount} Изпълнени цели";
+        TotalGoalsLabel.Text = $"{achievedCount}/{totalCount} Изпълнени цели";
     }
 
     // Navigation Handlers
