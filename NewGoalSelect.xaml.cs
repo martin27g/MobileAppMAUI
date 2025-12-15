@@ -1,4 +1,4 @@
-using MobileAppMAUI.Models;
+﻿using MobileAppMAUI.Models;
 using MobileAppMAUI.Services;
 using System.Collections.ObjectModel;
 
@@ -11,15 +11,14 @@ public partial class NewGoalSelect : ContentPage
     private async void OnButtonPressed(object sender, EventArgs e)
     {
         var btn = (ImageButton)sender;
-        // Shrink to 0.9 scale over 100ms
-        await btn.ScaleTo(0.9, 100);
-    }
 
+        await btn.ScaleTo(0.6, 150);
+    }
+    // за оразмеряване на бутоните ↑ ↓
     private async void OnButtonReleased(object sender, EventArgs e)
     {
         var btn = (ImageButton)sender;
-        // Return to normal size over 100ms
-        await btn.ScaleTo(1.0, 100);
+        await btn.ScaleTo(1.0, 150);
     }
 
     public NewGoalSelect(DataService _dataService)

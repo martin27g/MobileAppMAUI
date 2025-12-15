@@ -56,7 +56,7 @@ public partial class GoalDetails : ContentPage
         {
             switch (_goal.Type)
             {
-                // CASE 1: SPORT -> Weather Forecast
+                // SPORT
                 case GoalType.Sport:
                     var weatherData = await _httpClient.GetFromJsonAsync<Weather>("https://api.open-meteo.com/v1/forecast?latitude=42.6667&longitude=25.25&current=wind_speed_10m,temperature_2m,rain,cloud_cover&timezone=auto");
                     if (weatherData != null)
@@ -65,7 +65,7 @@ public partial class GoalDetails : ContentPage
                     }
                     break;
 
-                // CASE 2: FINANCE -> Exchange Rate (USD to BGN)
+                // FINANCE 
                 case GoalType.Finance:
                     var financeData = await _httpClient.GetFromJsonAsync<ExchangeRateResponse>("https://api.frankfurter.app/latest?from=USD&to=BGN");
                     if (financeData != null && financeData.rates.ContainsKey("BGN"))
@@ -74,18 +74,18 @@ public partial class GoalDetails : ContentPage
                     }
                     break;
 
-                // CASE 3: PERSONAL -> Motivational Quote
+                // PERSONAL 
                 case GoalType.Personal:
                     var quoteData = await _httpClient.GetFromJsonAsync<QuoteResponse>("https://dummyjson.com/quotes/random");
                     if (quoteData != null)
                     {
-                        API.Text = $"Myсъл за деня:\n\"{quoteData.quote}\"\n- {quoteData.author}";
+                        API.Text = $"Mисъл за деня:\n\"{quoteData.quote}\"\n- {quoteData.author}";
                     }
                     break;
 
-                // CASE 4: LEARNING (Optional default)
+                //  LEARNING 
                 case GoalType.Learning:
-                    API.Text = "Ученето е най-добрата инвестиция!";
+                    API.Text = "Учи, за да не си тъп!";
                     break;
             }
         }
@@ -96,7 +96,7 @@ public partial class GoalDetails : ContentPage
         }
     }
 
-    // --- Button Handlers ---
+    // Button Handlers
 
     private async void OnCompleteGoalClicked(object sender, EventArgs e)
     {
@@ -116,7 +116,7 @@ public partial class GoalDetails : ContentPage
 
         _goal.Achievements.Add(achievement);
 
-        await DisplayAlert("Браво!", "Добавихте 10 точки!", "ОК");
+        await DisplayAlert("Честито!", "Добавихте 10 точки!", "ОК");
     }
 
     private async void OnAchievementsClicked(object sender, EventArgs e)
@@ -196,7 +196,7 @@ public partial class GoalDetails : ContentPage
     }
 }
 
-// --- Helper Models for APIs ---
+// За API 
 
 public class ExchangeRateResponse
 {

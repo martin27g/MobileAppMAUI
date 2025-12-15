@@ -3,20 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileAppMAUI.GoalTypeDetailsPage">
 
-    <Grid RowDefinitions="Auto, *" Margin="10,25,10,20" Padding="15" RowSpacing="15">
+    <Grid RowDefinitions="Auto, *" Margin="10,25,10,0" Padding="15" RowSpacing="15">
+
         <VerticalStackLayout Margin="30,0,30,0">
             <Label x:Name="PageTitle" 
-               FontSize="30" 
-               FontAttributes="Bold" 
-               HorizontalOptions="Center"
-               TextColor="#77B948"
-               FontFamily="Pixel"/>
+                   FontSize="32" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center"
+                   TextColor="#77B948"
+                   FontFamily="Pixel"/>
             <BoxView HeightRequest="3" Color="LightGray"/>
         </VerticalStackLayout>
-        <CollectionView Grid.Row="1" x:Name="GoalsList" >
+
+        <CollectionView Grid.Row="1" x:Name="GoalsList">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="2" />
+            </CollectionView.ItemsLayout>
+
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border  Padding="15" BackgroundColor="White" StrokeShape="RoundRectangle 6">
+                    <Border Padding="15" BackgroundColor="White" StrokeShape="RoundRectangle 6">
                         <Grid ColumnDefinitions="*, Auto">
                             <Label Grid.Column="0" 
                                    Text="{Binding Description}" 
@@ -34,8 +41,9 @@
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+
             <CollectionView.EmptyView>
-                <Label Text="Няма постигнати цели от този тип." 
+                <Label Text="Няма постигнати цели от този тип."
                        HorizontalOptions="Center" 
                        VerticalOptions="Center" 
                        TextColor="Gray"/>

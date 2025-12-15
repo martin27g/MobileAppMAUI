@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MobileAppMAUI.GoalAchievementsPage"
-             Title="Постижения">
+             x:Class="MobileAppMAUI.GoalAchievementsPage">
 
     <Grid RowDefinitions="Auto, *, Auto" Padding="15" RowSpacing="10">
 
@@ -11,21 +10,19 @@
             <Image x:Name="TypeImage" 
                    HeightRequest="100" 
                    WidthRequest="100" 
-                   HorizontalOptions="Center" 
-                   Margin="0,0,0,5"/>
+                   HorizontalOptions="Center" />
 
             <Label Text="{Binding Description}" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
             <Label Text="Общ прогрес:" TextColor="Gray" HorizontalOptions="Center"/>
             <ProgressBar x:Name="GoalProgressBar" ProgressColor="#77B948" ScaleY="2"/>
             <Label x:Name="ProgressLabel" HorizontalOptions="Center" TextColor="#77B948" FontAttributes="Bold"/>
 
-            <Frame x:Name="RewardBox" 
+            <Border x:Name="RewardBox" 
                    IsVisible="False" 
-                   BackgroundColor="#FFD700" 
-                   BorderColor="Orange"
+                   BackgroundColor="#FFD700"         
                    Padding="10" 
-                   Margin="0,15,0,0" 
-                   CornerRadius="10" 
+                   Margin="0,10,0,5" 
+                   StrokeShape="RoundRectangle 8" 
                    HorizontalOptions="Center">
                 <VerticalStackLayout>
                     <Label Text="🎉 Честито! Печелиш 10 точки! 🎉"
@@ -37,13 +34,19 @@
                        FontSize="8"
                        HorizontalTextAlignment="End"/>
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
         </VerticalStackLayout>
+        
 
         <CollectionView Grid.Row="1" x:Name="AchievementsList" ItemsSource="{Binding Achievements}">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="2" />
+            </CollectionView.ItemsLayout>
+            
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Margin="0,5" Padding="10" BorderColor="LightGray" CornerRadius="5">
+                    <Border Padding="10" BackgroundColor="White" StrokeShape="RoundRectangle 8">
                         <Grid ColumnDefinitions="*, Auto">
                             <VerticalStackLayout Grid.Column="0">
                                 <Label Text="{Binding Date, StringFormat='{0:dd MMM yyyy}'}" TextColor="Black"/>
@@ -51,7 +54,7 @@
                             <Label Grid.Column="1" Text="{Binding Points, StringFormat='+{0}'}" 
                                    TextColor="#77B948" FontAttributes="Bold" VerticalOptions="Center"/>
                         </Grid>
-                    </Frame>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
             <CollectionView.EmptyView>
