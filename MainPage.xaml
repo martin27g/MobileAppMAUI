@@ -24,7 +24,7 @@
                 <Label x:Name="AchievedPointsLabel"
                        Text="0 Точки"   
                        FontAutoScalingEnabled="True" 
-                       FontSize="20"
+                       FontSize="21"
                        FontFamily="Pixel"
                        Grid.Row="0" 
                        Grid.Column="0" 

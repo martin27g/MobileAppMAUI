@@ -3,19 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:MobileAppMAUI.Models"
              x:Class="MobileAppMAUI.ToDo"
-             Title="ToDo">
+             BackgroundColor="#F0ECE7">
 
     <Grid RowDefinitions="Auto, *"
           HorizontalOptions="Center"
-          MaximumWidthRequest="600"
-          Margin="20"
-          RowSpacing="15">
+          RowSpacing="15"
+           Margin="10,25,10,20">
 
         <Border Grid.Row="0" 
                 BackgroundColor="#EFAB29" 
-                StrokeThickness="0"
-                StrokeShape="RoundRectangle 5" 
-                HeightRequest="60" 
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 8" 
+                HeightRequest="80"
                 Padding="10">
             <Label Text="Днес е хубав ден да..."
                    TextColor="White"
@@ -37,14 +36,15 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Goal">
-                    <Border BackgroundColor="Bisque"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 8"
-                            Padding="10">
+                    <Border
+                            BackgroundColor="White"  
+                            StrokeShape="RoundRectangle 8" 
+                            Padding="15"
+                            StrokeThickness="1">
 
                         <VerticalStackLayout Spacing="5" >
 
-                            <Image HeightRequest="40" WidthRequest="40">
+                            <Image HeightRequest="50" WidthRequest="80">
                                 <Image.Triggers>
                                     <DataTrigger TargetType="Image" Binding="{Binding Type}" Value="Finance" >
                                         <Setter Property="Source" Value="fingoal.png"/>
@@ -67,7 +67,7 @@
                                    HorizontalOptions="Center"/>
 
                             <StackLayout>
-                                <Label Text="{Binding Frequency}" FontSize="10" TextColor="#666" HorizontalOptions="Center">
+                                <Label Text="{Binding Frequency}" FontSize="12" TextColor="#666" HorizontalOptions="Center">
                                     <Label.Triggers>
                                         <DataTrigger TargetType="Label" Binding="{Binding Frequency}" Value="None">
                                             <Setter Property="IsVisible" Value="False"/>
@@ -75,7 +75,7 @@
                                     </Label.Triggers>
                                 </Label>
 
-                                <Label Text="{Binding DueDate, StringFormat='{0:dd.MM}'}" FontSize="10" TextColor="#E63946" HorizontalOptions="Center">
+                                <Label Text="{Binding DueDate, StringFormat='{0:dd.MM}'}" FontSize="12" TextColor="#E63946" HorizontalOptions="Center">
                                     <Label.Triggers>
                                         <DataTrigger TargetType="Label" Binding="{Binding DueDate}" Value="{x:Null}">
                                             <Setter Property="IsVisible" Value="False"/>

@@ -19,7 +19,6 @@ namespace MobileAppMAUI
 
         private void LoadData(DataService dataService, GoalType type)
         {
-            // Set Title
             switch (type)
             {
                 case GoalType.Finance: PageTitle.Text = "Финанси"; break;
@@ -28,20 +27,18 @@ namespace MobileAppMAUI
                 case GoalType.Personal: PageTitle.Text = "Лични"; break;
             }
 
-            // 1. Filter goals: Match Type AND must be Achieved (IsAchieved == true)
+            // Филтрира типа и дали е isAchieved
             var relevantGoals = dataService.Goals
                 .Where(g => g.Type == type && g.IsAchieved)
-                .OrderBy(g => g.Description) // 2. Sort Alphabetically
+                .OrderBy(g => g.Description) // сортиране по азбучен
                 .ToList();
 
             foreach (var goal in relevantGoals)
             {
                 string infoText = "";
 
-                // 3. Logic based on Type
-                if (type == GoalType.Personal || type == GoalType.Learning)
+                if (type == GoalType.Personal || type == GoalType.Learning)// Presonal или Learning
                 {
-                    // Show DATE (Last time it was marked achieved)
                     var lastAchievement = goal.Achievements
                         .Where(a => a.IsReward)
                         .OrderByDescending(a => a.Date)
@@ -51,9 +48,8 @@ namespace MobileAppMAUI
                         ? lastAchievement.Date.ToString("dd.MM.yyyy")
                         : "N/A";
                 }
-                else // Finance or Sport
+                else // Finance или Sport
                 {
-                    // Show COUNT (Number of times marked achieved)
                     int count = goal.Achievements.Count(a => a.IsReward);
                     infoText = $"{count} пъти";
                 }
@@ -67,7 +63,6 @@ namespace MobileAppMAUI
         }
     }
 
-    // Helper class for the list
     public class GoalDisplayItem
     {
         public string Description { get; set; }

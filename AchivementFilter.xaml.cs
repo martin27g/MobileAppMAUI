@@ -23,13 +23,9 @@ public partial class AchivementFilter : ContentPage
     {
         var allGoals = _dataService.Goals;
 
-        // 1. Total Goals Achieved (Count only unique goals that are finished)
+        // сметка за общия брой цели
         int totalAchieved = allGoals.Count(g => g.IsAchieved);
         TotalAchievedLabel.Text = totalAchieved.ToString();
-
-        // 2. Calculate Stats per Category
-        // Points: Sum only "IsReward" points
-        // Count: Count all goals of that type (achieved or not)
 
         // Finance
         double finScore = allGoals.Where(g => g.Type == GoalType.Finance)
@@ -59,7 +55,7 @@ public partial class AchivementFilter : ContentPage
                                        .Sum(a => a.Points);
         int personalGoals = allGoals.Count(g => g.Type == GoalType.Personal);
 
-        // 3. Update UI
+
         finPoints.Text = $"{finScore} т.";
         finCount.Text = $"{finGoals} цели";
 

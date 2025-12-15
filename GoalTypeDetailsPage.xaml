@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MobileAppMAUI.GoalTypeDetailsPage"
-             Title="Детайли за цели">
+             x:Class="MobileAppMAUI.GoalTypeDetailsPage">
 
-    <Grid RowDefinitions="Auto, *" Padding="15" RowSpacing="10">
-
-        <Label x:Name="PageTitle" 
-               FontSize="22" 
+    <Grid RowDefinitions="Auto, *" Margin="10,25,10,20" Padding="15" RowSpacing="15">
+        <VerticalStackLayout Margin="30,0,30,0">
+            <Label x:Name="PageTitle" 
+               FontSize="30" 
                FontAttributes="Bold" 
                HorizontalOptions="Center"
                TextColor="#77B948"
                FontFamily="Pixel"/>
-
-        <CollectionView Grid.Row="1" x:Name="GoalsList">
+            <BoxView HeightRequest="3" Color="LightGray"/>
+        </VerticalStackLayout>
+        <CollectionView Grid.Row="1" x:Name="GoalsList" >
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Margin="0,5" Padding="15" BorderColor="White" CornerRadius="10">
+                    <Border  Padding="15" BackgroundColor="White" StrokeShape="RoundRectangle 6">
                         <Grid ColumnDefinitions="*, Auto">
                             <Label Grid.Column="0" 
                                    Text="{Binding Description}" 
-                                   FontSize="16" 
+                                   FontSize="18" 
                                    VerticalOptions="Center"
                                    TextColor="Black"/>
 
@@ -31,7 +31,7 @@
                                    VerticalOptions="Center" 
                                    TextColor="#77B948"/>
                         </Grid>
-                    </Frame>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
             <CollectionView.EmptyView>

@@ -1,4 +1,4 @@
-using MobileAppMAUI.Helpers;
+﻿using MobileAppMAUI.Helpers;
 using MobileAppMAUI.Models;
 using MobileAppMAUI.Services;
 using System.Collections.ObjectModel;
@@ -9,7 +9,6 @@ public partial class ToDo : ContentPage
 {
     private readonly DataService _dataService;
 
-    // Binding Collection
     public ObservableCollection<Goal> FilteredGoals { get; set; } = new();
 
     public ToDo(DataService dataService)
@@ -27,35 +26,28 @@ public partial class ToDo : ContentPage
 
     private void LoadGoals()
     {
-        // 1. Get today's date (ignoring time)
         var today = DateTime.Today;
 
-        // 2. Filter logic based on requirements
         var goalsToShow = _dataService.Goals.Where(g =>
         {
-            // Case 1: Periodic Goals
             if (g.Frequency != GoalFrequency.None)
             {
                 return g.Frequency switch
                 {
-                    // Daily: Show if NOT achieved today
+                    // Daily: Показва се, ако не е постигната в определения срок, същата идея е и за следващите
                     GoalFrequency.Daily => !g.Achievements.Any(a => a.Date.Date == today),
 
-                    // Weekly: Show if NOT achieved this week
                     GoalFrequency.Weekly => !g.Achievements.Any(a => DateHelper.IsDateInCurrentWeek(a.Date)),
 
-                    // Monthly: Show if NOT achieved this month
                     GoalFrequency.Monthly => !g.Achievements.Any(a => DateHelper.IsDateInCurrentMonth(a.Date)),
 
-                    // Annual: Show if NOT achieved this year
                     GoalFrequency.Yearly => !g.Achievements.Any(a => DateHelper.IsDateInCurrentYear(a.Date)),
 
                     _ => false
                 };
             }
 
-            // Case 2: One-time Goals (Specific Date)
-            // Show if: Has DueDate AND DueDate is Today or Passed AND Not Achieved
+            //Ако е с дата
             if (g.DueDate.HasValue)
             {
                 bool isDueOrOverdue = g.DueDate.Value.Date <= today;
@@ -65,7 +57,6 @@ public partial class ToDo : ContentPage
             return false;
         }).ToList();
 
-        // 3. Update the ObservableCollection
         FilteredGoals.Clear();
         foreach (var goal in goalsToShow)
         {
@@ -79,6 +70,6 @@ public partial class ToDo : ContentPage
         {
             await Navigation.PushAsync(new GoalDetails(_dataService, selected.Id));
         }
-       ((CollectionView)sender).SelectedItem = null; // Clear selection
+       ((CollectionView)sender).SelectedItem = null; 
     }
 }
